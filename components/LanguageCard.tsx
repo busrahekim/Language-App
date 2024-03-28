@@ -1,20 +1,39 @@
-import { TouchableWithoutFeedback, Image } from "react-native";
+import { View, Image, TouchableOpacity } from "react-native";
 import React from "react";
+import LanguageItem from "@/constants/Languages";
+import { router } from "expo-router";
 
 interface LanguageCardProps {
   width: number;
   height: number;
-  item: any;
+  item: LanguageItem;
 }
 
-const LanguageCard: React.FC<LanguageCardProps> = ({ width, height, item }) => {
+const LanguageCard: React.FC<LanguageCardProps> = ({
+  width,
+  height,
+  item,
+  ...props
+}) => {
   return (
-    <TouchableWithoutFeedback>
-      <Image
-        source={require("../assets/images/eng.jpg")}
-        style={{ width: width * 0.6, height: height * 0.4 }}
-      />
-    </TouchableWithoutFeedback>
+    <View style={{ borderRadius: 16, overflow: "hidden" }}>
+      <TouchableOpacity
+        className="flex-1"
+        onPress={() =>
+          router.push({
+            pathname: "/languageItem/[id]",
+            params: { id: item.id },
+          })
+        }
+      >
+        <Image
+          source={item.image}
+          style={{ width: width, height: height }}
+          {...props}
+          className="object-cover"
+        />
+      </TouchableOpacity>
+    </View>
   );
 };
 

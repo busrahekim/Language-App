@@ -16,19 +16,18 @@ function TabBarIcon(props: {
 export default function TabLayout() {
   return (
     <Tabs
+      initialRouteName="index"
       screenOptions={{
         tabBarActiveTintColor: Colors["light"].tint,
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
       }}
-    >   
-     <Tabs.Screen name="home" options={{ headerShown: false,  tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />, }} />
-     <Tabs.Screen name="profile" options={{ headerShown: false, tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,  }} />
-      {/* <Tabs.Screen
+    >
+      <Tabs.Screen
         name="index"
         options={{
-          title: "Profile",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Home",
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
@@ -43,8 +42,13 @@ export default function TabLayout() {
             </Link>
           ),
         }}
-      /> */}
-  
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+        }}
+      />
     </Tabs>
   );
 }
