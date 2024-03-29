@@ -4,26 +4,30 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   DarkTheme,
   DefaultTheme,
+  Theme,
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Redirect, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
+export { ErrorBoundary } from "expo-router";
 
-// export const unstable_settings = {
-//   // Ensure that reloading on `/modal` keeps a back button present.
-//   initialRouteName: "(tabs)",
-// };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-// SplashScreen.preventAutoHideAsync();
+const MyTheme: Theme = {
+  dark: false,
+  colors: {
+    background: '#161a1d',
+    primary: 'rgb(10, 132, 255)',
+    card: 'rgb(18, 18, 18)',
+    text: 'rgb(229, 229, 231)',
+    border: '#414833',
+    notification: 'rgb(255, 69, 58)',
+  },
+};
+
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -44,7 +48,6 @@ export default function RootLayout() {
 
   console.log("Current user:", user);
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -60,7 +63,7 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={DefaultTheme}>
+    <ThemeProvider value={MyTheme}>
       <AuthProvider>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -70,19 +73,3 @@ export default function RootLayout() {
     </ThemeProvider>
   );
 }
-
-// const customTheme = {
-//   ...DefaultTheme,
-//   colors: {
-//     ...DefaultTheme.colors,
-//     background: "lightgray", // Set background color to light gray
-//     // You can customize other colors here if needed
-//   },
-// };
-
-// function RootLayoutNav() {
-
-//   return (
-
-//   );
-// }

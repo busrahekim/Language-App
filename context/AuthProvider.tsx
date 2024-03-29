@@ -1,9 +1,7 @@
 import { useSegments, useRouter } from "expo-router";
+import { User } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 
-type User = {
-  name: string;
-};
 
 type AuthType = {
   user: User | null;
@@ -23,6 +21,7 @@ function useProtectedRoute(user: any) {
 
   useEffect(() => {
     const inAuthGroup = segments[0] === "(auth)";
+    console.log("user: ",user);
 
     if (
       // If the user is not signed in and the initial segment is not anything in the auth group.

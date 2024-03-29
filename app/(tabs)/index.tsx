@@ -67,7 +67,7 @@ const Home = () => {
         />
       </View>
 
-      <View className="bg-red-500 flex-1 mt-2">
+      {/* <View className="flex-1 mt-2">
         <TextInput
           placeholder="Add item"
           onChangeText={(text: string) => setItem(text)}
@@ -81,7 +81,7 @@ const Home = () => {
             ))}
           </View>
         )}
-      </View>
+      </View> */}
     </View>
   );
   // return (

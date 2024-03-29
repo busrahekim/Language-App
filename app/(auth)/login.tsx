@@ -4,10 +4,10 @@ import {
   TextInput,
   ActivityIndicator,
   KeyboardAvoidingView,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "@/firebaseConfig";
-import { Button } from "@rneui/base";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -28,9 +28,7 @@ const Login = () => {
     setLoading(true);
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
-      // setUser({
-      //   name: "John Doe",
-      // });
+      setUser(res.user);
       console.log(res);
     } catch (error: any) {
       console.log(error);
@@ -63,32 +61,51 @@ const Login = () => {
   };
 
   return (
-    <View className="mx-5 flex-1 justify-center">
-      <KeyboardAvoidingView behavior="padding">
-        <TextInput
-          className="my-1 h-12 border rounded p-2 bg-white"
-          placeholder="Email"
-          autoCapitalize="none"
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-        />
-        <TextInput
-          className="my-1 h-12 border rounded p-2 bg-white"
-          placeholder="Password"
-          autoCapitalize="none"
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          secureTextEntry={true}
-        />
-        {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
-        ) : (
-          <>
-            <Button title="Login" onPress={handleLogin} />
-            <Button title="Create account" onPress={() => router.navigate("/signup")} />
-          </>
-        )}
-      </KeyboardAvoidingView>
+    <View className="flex-1 justify-center">
+      <Text className="mx-auto text-3xl text-white">
+        <Text className="text-[#b1a7a6] font-bold text-4xl">B</Text>ushLingo</Text>
+      <View className="mx-5 border-slate-400 border-b-2 p-5 ">
+        <KeyboardAvoidingView behavior="padding">
+          <TextInput
+            className="my-1 h-12 rounded p-2 bg-white"
+            placeholder="Email"
+            autoCapitalize="none"
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+          />
+          <TextInput
+            className="my-1 h-12 rounded p-2 bg-white"
+            placeholder="Password"
+            autoCapitalize="none"
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            secureTextEntry={true}
+          />
+          {loading ? (
+            <ActivityIndicator size="large" color="#b1a7a6" />
+          ) : (
+            <>
+              <Pressable
+                onPress={handleLogin}
+                className="mt-2 justify-center flex items-center bg-[#b1a7a6] p-2 rounded"
+              >
+                <Text className="text-white leading-5 -">Login</Text>
+              </Pressable>
+              <View className="flex flex-row items-center mt-4">
+                <Text className="font-semibold text-white">Don't you have an account ? </Text>
+                <Pressable
+                  onPress={() => router.navigate("/signup")}
+                  className="justify-center flex items-center"
+                >
+                  <Text className="underline text-[#b1a7a6]">
+                    Create account
+                  </Text>
+                </Pressable>
+              </View>
+            </>
+          )}
+        </KeyboardAvoidingView>
+      </View>
     </View>
   );
 };
