@@ -1,10 +1,10 @@
-import { Dimensions, TouchableOpacity, View } from "react-native";
-import React from "react";
-import { router } from "expo-router";
+import { Button, Dimensions, View, Text, TextInput } from "react-native";
+import React, { useEffect, useState } from "react";
 import Carousel from "react-native-snap-carousel";
 import LanguageCard from "@/components/LanguageCard";
 import LanguageItem from "@/constants/Languages";
-import { useNavigation } from "@react-navigation/native";
+import { addDoc, collection, onSnapshot } from "firebase/firestore";
+import { FIRESTORE_DB } from "../../firebaseConfig";
 
 const languageItems: LanguageItem[] = [
   {
@@ -20,25 +20,68 @@ const languageItems: LanguageItem[] = [
 
 const Home = () => {
   const { width } = Dimensions.get("screen");
-  const navigation = useNavigation();
+  const [items, setItems] = useState<any[]>([]);
+  const [item, setItem] = useState("");
 
-  const handleClick = () => {
-    console.log("clicked");
+  useEffect(() => {
+    const itemRef = collection(FIRESTORE_DB, "list");
+    const subscriber = onSnapshot(itemRef, {
+      next: (snapshot) => {
+        const a: any[] = [];
+        snapshot.docs.forEach((doc) => {
+          a.push({
+            id: doc.id,
+            ...doc.data(),
+          });
+        });
+        setItems(a);
+      },
+    });
+
+    return () => subscriber();
+  }, []);
+
+  const addItem = async () => {
+    console.log("add");
+    const doc = await addDoc(collection(FIRESTORE_DB, "list"), {
+      title: item,
+      done: false,
+    });
+    setItem("");
   };
+
   return (
     <View className="my-2 flex-1">
-      <Carousel
-        loop
-        sliderWidth={width}
-        itemWidth={250}
-        slideStyle={{ display: "flex", alignItems: "center" }}
-        data={languageItems}
-        firstItem={1}
-        inactiveSlideOpacity={0.6}
-        renderItem={({ item }) => (
-          <LanguageCard width={250} height={350} item={item} />
+      <View>
+        <Carousel
+          loop
+          sliderWidth={width}
+          itemWidth={250}
+          slideStyle={{ display: "flex", alignItems: "center" }}
+          data={languageItems}
+          firstItem={1}
+          inactiveSlideOpacity={0.6}
+          renderItem={({ item }) => (
+            <LanguageCard width={250} height={350} item={item} />
+          )}
+        />
+      </View>
+
+      <View className="bg-red-500 flex-1 mt-2">
+        <TextInput
+          placeholder="Add item"
+          onChangeText={(text: string) => setItem(text)}
+          value={item}
+        />
+        <Button onPress={() => addItem()} title="add" />
+        {items.length > 0 && (
+          <View>
+            {items.map((item) => (
+              <Text key={item.id}>{item.title}</Text>
+            ))}
+          </View>
         )}
-      />
+      </View>
     </View>
   );
   // return (
