@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { Audio } from "expo-av";
+import { Divider } from "@rneui/themed";
 
 const languageWords = [
   {
@@ -60,30 +61,28 @@ const LanguagePage = () => {
           key={index}
         >
           <TouchableOpacity
-            className="flex flex-row items-center justify-between shadow-md px-2 rounded-md bg-[#1D3557] shadow-blue-800 h-12"
+            className="flex flex-row items-center justify-between shadow-md px-2 rounded-md border-b-2 border-r-2 h-12 bg-white mb-2"
             onPress={() => toggleAccordion(index)}
           >
             <View className="flex flex-row items-center">
-              <MaterialIcons name="spatial-audio-off" size={22} color="white" />
-              <Text className="text-xl text-white px-2">{word.word}</Text>
+              <MaterialIcons name="spatial-audio-off" size={22} color="black" />
+              <Text className="text-xl text-slate-700 px-2">{word.word}</Text>
             </View>
             <FontAwesome
               name={openedIndex === index ? "eye" : "eye-slash"}
               size={24}
-              color="#457B9D"
+              color="black"
             />
           </TouchableOpacity>
           {openedIndex === index && (
-            <Animated.View className="px-4 py-2 w-full relative top-[-5px] bg-white ease-in-out duration-500 transition rounded-b-md">
+            <Animated.View className="px-4 py-2 mx-auto relative top-[-10px] border-t-2 bg-white ease-in-out duration-500 transition rounded-b-md">
               <Text className="font-bold mb-1 text-lg">{word.translation}</Text>
               <Text style={{ display: "flex", flexWrap: "wrap" }}>
                 {word.sentence.split(word.word).map((part, index) => (
                   <React.Fragment key={index}>
                     <Text className="mb-1">{part}</Text>
                     {index < word.sentence.split(word.word).length - 1 && (
-                      <Text className="font-bold mb-1">
-                        {word.word}
-                      </Text>
+                      <Text className="font-bold mb-1">{word.word}</Text>
                     )}
                   </React.Fragment>
                 ))}
@@ -92,6 +91,7 @@ const LanguagePage = () => {
           )}
         </View>
       ))}
+      <Divider width={2}/>
       <View className="flex-1"></View>
     </View>
   );
