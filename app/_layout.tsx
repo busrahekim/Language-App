@@ -8,13 +8,14 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 export { ErrorBoundary } from "expo-router";
-
+import { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import auth from "@react-native-firebase/auth";
 
 // #161a1d
 
@@ -36,18 +37,33 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  const [user, setUser] = useState<User | null>(null);
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      console.log("Auth state changed:", user);
-      setUser(user);
-    });
+  // const [user, setUser] = useState<User | null>(null);
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
+  //     console.log("Auth state changed:", user);
+  //     setUser(user);
+  //   });
 
-    // Clean up subscription
-    return () => unsubscribe();
-  }, []);
+  //   // Clean up subscription
+  //   return () => unsubscribe();
+  // }, []);
 
   // console.log("Current user:", user);
+
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
+
+  const onAuthStateChanged = (user: FirebaseAuthTypes.User) => {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  };
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(() => onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  if (initializing) return null;
 
   useEffect(() => {
     if (error) throw error;
@@ -63,13 +79,20 @@ export default function RootLayout() {
     return null;
   }
 
+  if (!user) {
+    router.navigate("/login");
+  }
+
   return (
     <ThemeProvider value={MyTheme}>
       {/* <AuthProvider> */}
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-      </Stack>
+      {user && (
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        </Stack>
+      )}
+
       {/* </AuthProvider> */}
     </ThemeProvider>
   );

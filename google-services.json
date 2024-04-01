@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "550758220374",
+    "project_id": "languageapp-86a62",
+    "storage_bucket": "languageapp-86a62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550758220374:android:5e4709de334c709c4431f7",
+        "android_client_info": {
+          "package_name": "com.company.mylanguageapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVaGejXcCk7Cg6Oy_q8lvhP5IMK2q9uHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
