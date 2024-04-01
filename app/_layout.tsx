@@ -16,18 +16,19 @@ import { useEffect, useState } from "react";
 export { ErrorBoundary } from "expo-router";
 
 
+// #161a1d
+
 const MyTheme: Theme = {
   dark: false,
   colors: {
-    background: '#161a1d',
-    primary: 'rgb(10, 132, 255)',
-    card: 'rgb(18, 18, 18)',
-    text: 'rgb(229, 229, 231)',
-    border: '#414833',
-    notification: 'rgb(255, 69, 58)',
+    background: "#ebebf0",
+    primary: "rgb(10, 132, 255)",
+    card: "rgb(18, 18, 18)",
+    text: "rgb(229, 229, 231)",
+    border: "#414833",
+    notification: "rgb(255, 69, 58)",
   },
 };
-
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -46,7 +47,7 @@ export default function RootLayout() {
     return () => unsubscribe();
   }, []);
 
-  console.log("Current user:", user);
+  // console.log("Current user:", user);
 
   useEffect(() => {
     if (error) throw error;
@@ -64,12 +65,12 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={MyTheme}>
-      <AuthProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
-      </AuthProvider>
+      {/* <AuthProvider> */}
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+      </Stack>
+      {/* </AuthProvider> */}
     </ThemeProvider>
   );
 }

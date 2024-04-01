@@ -18,15 +18,15 @@ export default function TabLayout() {
     <Tabs
       initialRouteName="index"
       screenOptions={{
-        tabBarActiveTintColor: Colors["light"].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
+        tabBarActiveTintColor: "white",
+        tabBarShowLabel: false,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>

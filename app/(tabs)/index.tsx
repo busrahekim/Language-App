@@ -1,22 +1,21 @@
-import { Button, Dimensions, View, Text, TextInput } from "react-native";
+import {
+  Button,
+  Dimensions,
+  View,
+  Text,
+  TextInput,
+  
+  Pressable,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import Carousel from "react-native-snap-carousel";
 import LanguageCard from "@/components/LanguageCard";
 import LanguageItem from "@/constants/Languages";
 import { addDoc, collection, onSnapshot } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
-
-const languageItems: LanguageItem[] = [
-  {
-    id: 1,
-    image: require("@/assets/images/1.jpg"),
-    name: "English",
-  },
-  { id: 2, image: require("@/assets/images/2.jpg"), name: "German" },
-  { id: 3, image: require("@/assets/images/3.jpg"), name: "Spanish" },
-  { id: 4, image: require("@/assets/images/4.jpg"), name: "French" },
-  { id: 5, image: require("@/assets/images/5.jpg"), name: "Turkish" },
-];
+import HomeHeader from "@/components/HomeHeader";
+import HomeSegment from "@/components/HomeSegment";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = () => {
   const { width } = Dimensions.get("screen");
@@ -50,22 +49,30 @@ const Home = () => {
     setItem("");
   };
 
+  const handleGoalClick = () => {
+    console.log("goal");
+  };
+
   return (
-    <View className="my-2 flex-1">
-      <View>
-        <Carousel
-          loop
-          sliderWidth={width}
-          itemWidth={250}
-          slideStyle={{ display: "flex", alignItems: "center" }}
-          data={languageItems}
-          firstItem={1}
-          inactiveSlideOpacity={0.6}
-          renderItem={({ item }) => (
-            <LanguageCard width={250} height={350} item={item} />
-          )}
-        />
+    <SafeAreaView className="flex-1">
+      <HomeHeader />
+      <View className="flex justify-center mx-3 mt-3 rounded-md p-3 border-b-2 border-r-2 h-46 overflow-hidden relative bg-white">
+          <Text className="text-2xl">Hello, Bush!</Text>
+          <Text className="text-lg">
+            You should make more exercise to reach your daily goal.
+          </Text>
+          <Pressable className="mt-4" onPress={handleGoalClick}>
+            <Text className="text-lg text-purple-900 font-bold">
+              Edit your goal
+            </Text>
+          </Pressable>
+          <View className="absolute right-0 bottom-0 h-16 w-16">
+            <View className="absolute right-[-34px] bottom-[10px] w-[170px] transform -rotate-45 bg-slate-900 py-1">
+            </View>
+          </View>
       </View>
+
+      <HomeSegment/>
 
       {/* <View className="flex-1 mt-2">
         <TextInput
@@ -82,7 +89,7 @@ const Home = () => {
           </View>
         )}
       </View> */}
-    </View>
+    </SafeAreaView>
   );
   // return (
   //   <View>
