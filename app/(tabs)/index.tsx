@@ -40,14 +40,14 @@ const Home = () => {
     return () => subscriber();
   }, []);
 
-  const addItem = async () => {
-    console.log("add");
-    const doc = await addDoc(collection(FIRESTORE_DB, "list"), {
-      title: item,
-      done: false,
-    });
-    setItem("");
-  };
+  // const addItem = async () => {
+  //   console.log("add");
+  //   const doc = await addDoc(collection(FIRESTORE_DB, "list"), {
+  //     title: item,
+  //     done: false,
+  //   });
+  //   setItem("");
+  // };
 
   const handleGoalClick = () => {
     console.log("goal");

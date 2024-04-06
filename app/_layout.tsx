@@ -14,8 +14,8 @@ import { User, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 export { ErrorBoundary } from "expo-router";
-import { FirebaseAuthTypes } from "@react-native-firebase/auth";
-import auth from "@react-native-firebase/auth";
+// import { FirebaseAuthTypes } from "@react-native-firebase/auth";
+// import auth from "@react-native-firebase/auth";
 
 // #161a1d
 
@@ -24,8 +24,8 @@ const MyTheme: Theme = {
   colors: {
     background: "#ebebf0",
     primary: "rgb(10, 132, 255)",
-    card: "rgb(18, 18, 18)",
-    text: "rgb(229, 229, 231)",
+    card: "#ebebf0",
+    text: "#414833",
     border: "#414833",
     notification: "rgb(255, 69, 58)",
   },
@@ -37,62 +37,61 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // const [user, setUser] = useState<User | null>(null);
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
-  //     console.log("Auth state changed:", user);
-  //     setUser(user);
-  //   });
-
-  //   // Clean up subscription
-  //   return () => unsubscribe();
-  // }, []);
-
-  // console.log("Current user:", user);
-
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
-
-  const onAuthStateChanged = (user: FirebaseAuthTypes.User) => {
-    setUser(user);
-    if (initializing) setInitializing(false);
-  };
-
+  const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(() => onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      console.log("Auth state changed:", user);
+      setUser(user);
+    });
+
+    // Clean up subscription
+    return () => unsubscribe();
   }, []);
 
-  if (initializing) return null;
+  console.log("Current user:", user);
 
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+  // const [initializing, setInitializing] = useState(true);
+  // const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+  // const onAuthStateChanged = (user: FirebaseAuthTypes.User) => {
+  //   setUser(user);
+  //   if (initializing) setInitializing(false);
+  // };
 
-  if (!loaded) {
-    return null;
-  }
+  // useEffect(() => {
+  //   const subscriber = auth().onAuthStateChanged(() => onAuthStateChanged);
+  //   return subscriber; // unsubscribe on unmount
+  // }, []);
 
-  if (!user) {
-    router.navigate("/login");
-  }
+  // if (initializing) return null;
+
+  // useEffect(() => {
+  //   if (error) throw error;
+  // }, [error]);
+
+  // useEffect(() => {
+  //   if (loaded) {
+  //     SplashScreen.hideAsync();
+  //   }
+  // }, [loaded]);
+
+  // if (!loaded) {
+  //   return null;
+  // }
+
+  // if (!user) {
+  //   router.navigate("/login");
+  // }
 
   return (
     <ThemeProvider value={MyTheme}>
       {/* <AuthProvider> */}
-      {user && (
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
-      )}
-
+      {/* {user && ( */}
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="settings" options={{ presentation: "modal" }} />
+      </Stack>
+      {/* )} */}
       {/* </AuthProvider> */}
     </ThemeProvider>
   );

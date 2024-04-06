@@ -15,52 +15,22 @@ import {
 import { useAuth } from "@/context/AuthProvider";
 import { doc, setDoc } from "firebase/firestore";
 import { router } from "expo-router";
-import auth from "@react-native-firebase/auth";
+// import auth from "@react-native-firebase/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  // const { setUser } = useAuth();
+  const { setUser } = useAuth();
 
-  // const auth = FIREBASE_AUTH;
-
-  // const handleLogin = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const res = await signInWithEmailAndPassword(auth, email, password);
-  //     setUser(res.user);
-  //     console.log(res);
-  //   } catch (error: any) {
-  //     console.log(error);
-  //     alert("login failed");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const auth = FIREBASE_AUTH;
 
   const handleLogin = async () => {
     setLoading(true);
     try {
-      auth()
-        .signInWithEmailAndPassword(
-          email,
-          password
-        )
-        .then(() => {
-          console.log("User account created & signed in!");
-        })
-        .catch((error : any) => {
-          if (error.code === "auth/email-already-in-use") {
-            console.log("That email address is already in use!");
-          }
-
-          if (error.code === "auth/invalid-email") {
-            console.log("That email address is invalid!");
-          }
-
-          console.error(error);
-        });
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      setUser(res.user);
+      console.log(res);
     } catch (error: any) {
       console.log(error);
       alert("login failed");
@@ -68,6 +38,36 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+  // const handleLogin = async () => {
+  //   setLoading(true);
+  //   try {
+  //     auth()
+  //       .signInWithEmailAndPassword(
+  //         email,
+  //         password
+  //       )
+  //       .then(() => {
+  //         console.log("User account created & signed in!");
+  //       })
+  //       .catch((error : any) => {
+  //         if (error.code === "auth/email-already-in-use") {
+  //           console.log("That email address is already in use!");
+  //         }
+
+  //         if (error.code === "auth/invalid-email") {
+  //           console.log("That email address is invalid!");
+  //         }
+
+  //         console.error(error);
+  //       });
+  //   } catch (error: any) {
+  //     console.log(error);
+  //     alert("login failed");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // const handleSignUp = async () => {
   //   setLoading(true);
