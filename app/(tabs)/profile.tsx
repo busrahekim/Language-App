@@ -1,8 +1,5 @@
 import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
-import { Button } from "@rneui/themed";
-import { FIREBASE_AUTH } from "@/firebaseConfig";
-import { signOut } from "firebase/auth";
 import { Link } from "expo-router";
 import {
   AntDesign,
@@ -13,15 +10,8 @@ import {
 } from "@expo/vector-icons";
 
 const Profile = () => {
-  const auth = FIREBASE_AUTH;
-
-  const handleSignOut = () => {
-    signOut(auth);
-  };
   return (
     <View className="flex-1 justify-center">
-      {/* <Text>Profile</Text>
-      <Button onPress={handleSignOut} title="Sign Out" /> */}
       <View className="flex-1 relative">
         <Image
           source={require("@/assets/images/profile2.jpg")}
@@ -59,7 +49,7 @@ const Profile = () => {
             General Stats
           </Text>
           <View className="flex-row flex-wrap gap-4">
-            <View className="shadow-md shadow-slate-700 rounded-md w-[45%]">
+            <View className="shadow-md shadow-slate-700 w-[45%]">
               <View className="flex flex-row gap-2 px-3 py-2">
                 <FontAwesome5 name="fire-alt" size={24} color="orange" />
                 <View>
@@ -68,7 +58,7 @@ const Profile = () => {
                 </View>
               </View>
             </View>
-            <View className="shadow-md shadow-slate-700 rounded-md w-[45%]">
+            <View className="shadow-md shadow-slate-700 w-[45%]">
               <View className="flex flex-row gap-2 px-3 py-2">
                 <MaterialIcons name="electric-bolt" size={24} color="#e9c46a" />
                 <View>
@@ -77,7 +67,7 @@ const Profile = () => {
                 </View>
               </View>
             </View>
-            <View className="shadow-md shadow-slate-700 rounded-md w-[45%]">
+            <View className="shadow-md shadow-slate-700 w-[45%]">
               <View className="flex flex-row gap-2 px-3 py-2">
                 <Foundation name="sheriff-badge" size={24} color="#457b9d" />
                 <View>
@@ -86,13 +76,53 @@ const Profile = () => {
                 </View>
               </View>
             </View>
-            <View className="shadow-md shadow-slate-700 rounded-md w-[45%]">
+            <View className="shadow-md shadow-slate-700 w-[45%]">
               <View className="flex flex-row gap-2 px-3 py-2">
                 <SimpleLineIcons name="badge" size={24} color="gray" />
                 <View>
                   <Text className="font-bold text-lg">0</Text>
                   <Text className=" text-slate-400 mb-2">Daily Mission</Text>
                 </View>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        <View className="px-4 mt-2">
+          <View className="flex flex-row justify-between">
+            <Text className="font-bold text-2xl text-gray-800 mb-2">
+              Achievements
+            </Text>
+            <Pressable onPress={() => console.log("clicked")}>
+              <Text className="font-bold text-lg text-blue-400 mb-2">
+                Show All
+              </Text>
+            </Pressable>
+          </View>
+
+          <View className="flex-row border-gray-300 border justify-between rounded-md">
+            <View className="border-r-2 border-gray-300">
+              <View className="flex flex-row py-2">
+                <Image
+                  source={require("@/assets/images/ach1.png")}
+                  className="w-32 h-24"
+                />
+              </View>
+            </View>
+            <View className="border-r-2 border-gray-300">
+              <View className="flex flex-row py-2">
+                <Image
+                  source={require("@/assets/images/ach2.png")}
+                  className="w-32 h-24"
+                />
+              </View>
+            </View>
+            <View className=" ">
+              <View className="flex flex-row py-2">
+                <Image
+                  source={require("@/assets/images/ach4.png")}
+                  className="w-24 h-24"
+                />
               </View>
             </View>
           </View>
