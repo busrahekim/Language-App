@@ -100,28 +100,31 @@ const Profile = () => {
             </Pressable>
           </View>
 
-          <View className="flex-row border-gray-300 border justify-between rounded-md">
+          <View className="flex-row border-gray-300 border justify-evenly rounded-md ">
             <View className="border-r-2 border-gray-300">
               <View className="flex flex-row py-2">
                 <Image
-                  source={require("@/assets/images/ach1.png")}
-                  className="w-32 h-24"
+                  source={require("@/assets/images/ach5.png")}
+                  className="w-28 h-24"
+                  style={{ resizeMode: "contain" }}
                 />
               </View>
             </View>
             <View className="border-r-2 border-gray-300">
               <View className="flex flex-row py-2">
                 <Image
-                  source={require("@/assets/images/ach2.png")}
-                  className="w-32 h-24"
+                  source={require("@/assets/images/ach6.png")}
+                  style={{ resizeMode: "contain" }}
+                  className="w-24 h-24"
                 />
               </View>
             </View>
             <View className=" ">
               <View className="flex flex-row py-2">
                 <Image
-                  source={require("@/assets/images/ach4.png")}
+                  source={require("@/assets/images/ach7.png")}
                   className="w-24 h-24"
+                  style={{  resizeMode: 'contain' }}
                 />
               </View>
             </View>
