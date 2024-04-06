@@ -4,8 +4,8 @@ import {
   View,
   Text,
   TextInput,
-  
   Pressable,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Carousel from "react-native-snap-carousel";
@@ -56,23 +56,24 @@ const Home = () => {
   return (
     <SafeAreaView className="flex-1">
       <HomeHeader />
-      <View className="flex justify-center mx-3 mt-3 rounded-md p-3 border-b-2 border-r-2 h-46 overflow-hidden relative bg-white">
+      <ScrollView>
+        <View className="flex justify-center mx-3 mt-3 rounded-md p-3 border-b-2 border-r-2 h-46 overflow-hidden relative bg-white">
           <Text className="text-2xl">Hello, Bush!</Text>
           <Text className="text-lg">
             You should make more exercise to reach your daily goal.
           </Text>
           <Pressable className="mt-4" onPress={handleGoalClick}>
-            <Text className="text-lg text-purple-900 font-bold">
+            <Text className="text-lg text-blue-500 font-bold">
               Edit your goal
             </Text>
           </Pressable>
           <View className="absolute right-0 bottom-0 h-16 w-16">
-            <View className="absolute right-[-34px] bottom-[10px] w-[170px] transform -rotate-45 bg-slate-900 py-1">
-            </View>
+            <View className="absolute right-[-34px] bottom-[10px] w-[170px] transform -rotate-45 bg-blue-500 py-1"></View>
           </View>
-      </View>
+        </View>
 
-      <HomeSegment/>
+        <HomeSegment />
+      </ScrollView>
 
       {/* <View className="flex-1 mt-2">
         <TextInput
