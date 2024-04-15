@@ -29,7 +29,7 @@ const languageWords = [
   },
 ];
 
-const LanguagePage = () => {
+const CategoryPage = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [openedIndex, setOpenedIndex] = useState<number | null>(null);
   const [sound, setSound] = useState<Audio.Sound | undefined>(undefined);
@@ -91,10 +91,10 @@ const LanguagePage = () => {
           )}
         </View>
       ))}
-      <Divider width={2}/>
+      <Divider width={2} />
       <View className="flex-1"></View>
     </View>
   );
 };
 
-export default LanguagePage;
+export default CategoryPage;

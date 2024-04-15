@@ -3,9 +3,17 @@ import React from "react";
 import StudyCategoryCard from "./StudyCategoryCard";
 
 const items = [
-  { title: "Mistakes", img: require("@/assets/images/Zari_video_games.gif") },
-  { title: "Words", img: require("@/assets/images/Zari_lollipop.gif") },
-  { title: "New Learnings", img: require("@/assets/images/Zari_karate.gif") },
+  {
+    id: 1,
+    title: "Mistakes",
+    img: require("@/assets/images/Zari_video_games.gif"),
+  },
+  { id: 2, title: "Words", img: require("@/assets/images/Zari_lollipop.gif") },
+  {
+    id: 3,
+    title: "New Learnings",
+    img: require("@/assets/images/Zari_karate.gif"),
+  },
 ];
 
 const StudyCategory = () => {

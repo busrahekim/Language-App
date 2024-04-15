@@ -21,7 +21,7 @@ const LanguageCard: React.FC<LanguageCardProps> = ({
         className="flex-1"
         onPress={() =>
           router.push({
-            pathname: "/languageItem/[id]",
+            pathname: "/categoryItem/[id]",
             params: { id: item.id },
           })
         }
