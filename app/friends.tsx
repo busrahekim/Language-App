@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import SearchBar from "@/components/SearchBar";
 import { useDebounce } from "@/hooks/useDebounce";
 import { User, fetchUsers } from "@/utils/fetchUsers";
@@ -26,7 +27,7 @@ const Friends = () => {
   return (
     <ScrollView>
       <SearchBar onChange={setSearch} />
-      {loading && <Text>Loading...</Text>}
+      {loading && <Loading />}
       {!loading &&
         users.map((user) => {
           return (
