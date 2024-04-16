@@ -1,18 +1,21 @@
-import { View, Text, TouchableOpacity, Animated } from "react-native";
-import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Animated,
+  ScrollView,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 import { Divider } from "@rneui/themed";
+import { collection, getFirestore, onSnapshot } from "firebase/firestore";
+import { FIRESTORE_DB } from "@/firebaseConfig";
+import ChatBubble from "@/components/ChatBubble";
+import { useCategory } from "@/hooks/useCategory";
 
 const languageWords = [
-  {
-    word: "success",
-    translation: "başarı",
-    sentence:
-      "- After years of hard work and dedication, she finally achieved the success she had alway dreamed of.",
-    audio: require("@/assets/audio/success.mp3"),
-  },
   {
     word: "accomplished",
     translation: "başarılı",
@@ -20,19 +23,13 @@ const languageWords = [
       "- She felt accomplished after completing her first marathon, a feat she had been training for tirelessly.",
     audio: require("@/assets/audio/accomplished.mp3"),
   },
-  {
-    word: "unsuccessful",
-    translation: "başarısız",
-    sentence:
-      "- Despite his best efforts, the project remained unsuccessful, leading to disappointment and frustration among the team.",
-    audio: require("@/assets/audio/unsuccessful.mp3"),
-  },
 ];
 
 const CategoryPage = () => {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, title } = useLocalSearchParams<{ id: string; title: string }>();
   const [openedIndex, setOpenedIndex] = useState<number | null>(null);
   const [sound, setSound] = useState<Audio.Sound | undefined>(undefined);
+  const items = useCategory(title);
 
   const playSound = async (audio: any) => {
     if (sound) {
@@ -53,9 +50,15 @@ const CategoryPage = () => {
   };
 
   return (
-    <View className="flex justify-center px-3 py-3 flex-1">
-      <Text className="font-semibold text-xl mb-2">Today's Words</Text>
-      {languageWords.map((word, index) => (
+    <View className="flex  px-3 py-3 flex-1">
+      <Text
+        className="font-semibold text-xl mb-2 uppercase"
+        style={{ fontFamily: "SpaceMono" }}
+      >
+        {title}
+      </Text>
+
+      {/* {languageWords.map((word, index) => (
         <View
           className={`${openedIndex === index ? "mb-6" : "mb-1"}`}
           key={index}
@@ -90,8 +93,58 @@ const CategoryPage = () => {
             </Animated.View>
           )}
         </View>
-      ))}
-      <Divider width={2} />
+      ))} */}
+      {id === "3" ? (
+        <ScrollView>
+          {items.map((item) => (
+            <View
+              key={item.id}
+              className="bg-white flex flex-row rounded mb-2 shadow-md shadow-black h-fit"
+            >
+              <View className="justify-center items-center flex flex-row">
+                <Text
+                  style={{ transform: [{ rotate: "-90deg" }] }}
+                  className="font-semibold text-xl uppercase mx-2"
+                >
+                  {item.eng}
+                </Text>
+                <View className="w-[1px] h-full mx-1 bg-gray-800" />
+              </View>
+              <View className="mx-5 mt-2">
+                {item.condition.map((c: any) => (
+                  <Text>• {c}</Text>
+                ))}
+                {item.usage.map((i: any) => (
+                  <View className="flex flex-row mt-1 mb-1">
+                    <Text>
+                      <Text className="font-semibold">{item.eng}</Text> {i}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          ))}
+        </ScrollView>
+      ) : (
+        <ScrollView>
+          {items.map((item) => (
+            // <Text>{item.eng}</Text>
+            <>
+              <ChatBubble item={item} />
+              {item.sentence && (
+                <Text
+                  className="font-semibold text-sm my-2"
+                  style={{ fontFamily: "SpaceMono" }}
+                >
+                  {item.sentence}
+                </Text>
+              )}
+              <View className="my-2 border border-b-2 border-b-gray-200 border-x-white"></View>
+            </>
+          ))}
+        </ScrollView>
+      )}
+
       <View className="flex-1"></View>
     </View>
   );

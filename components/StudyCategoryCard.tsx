@@ -15,7 +15,7 @@ const StudyCategoryCard = ({ item }: IProps) => {
     });
   };
   return (
-    <TouchableOpacity onPress={handleCategoryClick}>
+    <>
       <View className="rounded-md bg-white h-24 w-36 p-2 relative ml-2">
         <Text className="mt-1 text-lg">{item.title}</Text>
         {/* <View className="h-4 w-4 bg-slate-100 rounded-md absolute bottom-0 right-0 m-3">
@@ -30,7 +30,7 @@ const StudyCategoryCard = ({ item }: IProps) => {
         </View>
       
       </View>
-    </TouchableOpacity>
+    </>
   );
 };
 
