@@ -1,13 +1,23 @@
+import {
+  NativeSyntheticEvent,
+  TextInputChangeEventData,
+  TextInput,
+} from "react-native";
+
 interface IProps {
-  onChange: (value: string) => void;
+  onChange: (text: string) => void;
 }
+
 const SearchBar = ({ onChange }: IProps) => {
   return (
-    <input
-      type="text"
-      onChange={(e) => onChange(e.target.value)}
+    <TextInput
+      onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) =>
+        onChange(e.nativeEvent.text)
+      }
       placeholder="Search"
+      className="px-4 py-4 bg-gray-300 "
     />
+    
   );
 };
 

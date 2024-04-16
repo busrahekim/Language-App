@@ -5,7 +5,7 @@ import StudyCategoryCard from "./StudyCategoryCard";
 const items = [
   {
     id: 1,
-    title: "Mistakes",
+    title: "Phrases",
     img: require("@/assets/images/Zari_video_games.gif"),
   },
   { id: 2, title: "Words", img: require("@/assets/images/Zari_lollipop.gif") },
