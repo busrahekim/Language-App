@@ -1,8 +1,11 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StudyCategoryCard from "./StudyCategoryCard";
 import { router } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
+import { collection } from "firebase/firestore";
+import { FIRESTORE_DB } from "@/firebaseConfig";
+import { useCategory } from "@/hooks/useCategory";
 
 const items = [
   {
@@ -19,19 +22,23 @@ const items = [
 ];
 
 const StudyCategory = () => {
+  const categories = useCategory("Categories");
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
   const handleCategoryClick = (item: {
-    id: number;
-    title: string;
-    img: any;
+    categoryID: string;
+    categoryTitle: string;
   }) => {
     router.push({
       pathname: "/categoryItem/[id]",
-      params: { id: item.id, title: item.title },
+      params: { id: item.categoryID, title: item.categoryTitle },
     });
   };
 
   const handleAddCategory = () => {
-    console.log("a");
+    router.push({
+      pathname: "/createCollection",
+    });
   };
   return (
     <View className="flex my-3 ml-4">
@@ -43,8 +50,11 @@ const StudyCategory = () => {
         showsHorizontalScrollIndicator={false}
         className="flex flex-row gap-2"
       >
-        {items.map((item, index) => (
-          <TouchableOpacity onPress={() => handleCategoryClick(item)}>
+        {categories.map((item, index) => (
+          <TouchableOpacity
+            onPress={() => handleCategoryClick(item)}
+            key={index}
+          >
             <StudyCategoryCard item={item} key={index} />
           </TouchableOpacity>
         ))}
