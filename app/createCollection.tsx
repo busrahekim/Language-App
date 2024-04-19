@@ -1,3 +1,4 @@
+import TemplateComponent from "@/components/TemplateComponent";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -12,6 +13,7 @@ import {
 const CreatePageScreen = () => {
   const [collectionTitle, setCollectionTitle] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
 
   const handleClick = () => {
     setShowModal(true);
@@ -22,14 +24,25 @@ const CreatePageScreen = () => {
     }, 2000);
   };
 
+  const handleTemplateSelection = (template: any) => {
+    console.log(template);
+
+    setSelectedTemplate(template);
+  };
+
   return (
     <SafeAreaView className="flex-1 mx-5 space-y-2 justify-center">
-      <Text className="font-semibold">Collection Title</Text>
       <TextInput
         value={collectionTitle}
         onChangeText={(e) => setCollectionTitle(e)}
-        className="rounded-md px-4 py-2 bg-gray-300"
+        className="rounded-md px-4 py-2 bg-gray-100"
+        placeholder="Collection Title"
       ></TextInput>
+      <Text className="text-base">Choose your template</Text>
+      <TemplateComponent
+        onSelectTemplate={handleTemplateSelection}
+        selectedTemplate={selectedTemplate}
+      />
 
       <Pressable
         onPress={handleClick}
