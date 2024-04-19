@@ -1,6 +1,8 @@
 import TemplateComponent from "@/components/TemplateComponent";
+import useItemReducer from "@/hooks/useItemReducer";
+import { AntDesign } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import {
   View,
   TextInput,
@@ -8,26 +10,43 @@ import {
   Pressable,
   Modal,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
 
 const CreatePageScreen = () => {
   const [collectionTitle, setCollectionTitle] = useState("");
+  const [eng, setEng] = useState("");
+  const [tr, setTr] = useState("");
+  const [sentence, setSentence] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [addButtonClicked, setAddButtonClicked] = useState(false);
+
+  const { state, addItem } = useItemReducer();
 
   const handleClick = () => {
-    setShowModal(true);
-    setTimeout(() => {
-      router.push({
-        pathname: "/(tabs)",
-      });
-    }, 2000);
+    // setShowModal(true);
+    // setTimeout(() => {
+    //   router.push({
+    //     pathname: "/(tabs)",
+    //   });
+    // }, 2000);
+
+    console.log(state);
   };
 
   const handleTemplateSelection = (template: any) => {
-    console.log(template);
-
     setSelectedTemplate(template);
+  };
+
+  const handleAddCategory = () => {
+    setAddButtonClicked(true);
+  };
+  const addField = () => {
+    addItem({ eng: eng, tr: tr });
+    setEng("")
+    setTr("")
+    setSentence("")
   };
 
   return (
@@ -43,6 +62,43 @@ const CreatePageScreen = () => {
         onSelectTemplate={handleTemplateSelection}
         selectedTemplate={selectedTemplate}
       />
+      <TouchableOpacity onPress={handleAddCategory}>
+        <View className="flex flex-row items-center rounded-md bg-blue-400 h-10 w-[95%] px-2 my-2 mx-2">
+          <View className="mt-1 mx-1">
+            <AntDesign name="plus" size={20} color="rgb(255,255,255)" />
+          </View>
+          <Text className="mt-1 text-lg text-white">Add Field</Text>
+        </View>
+      </TouchableOpacity>
+      <View className="flex p-2 bg-white rounded-md">
+        <View className="flex flex-row justify-between gap-1">
+          <TextInput
+            value={eng}
+            onChangeText={(e) => setEng(e)}
+            className="rounded-md px-4 py-2 bg-gray-100 my-2 flex-1"
+            placeholder="ENG"
+          ></TextInput>
+          <TextInput
+            value={tr}
+            onChangeText={(e) => setTr(e)}
+            className="rounded-md px-4 py-2 bg-gray-100 my-2 flex-1"
+            placeholder="TR"
+          ></TextInput>
+        </View>
+        <TextInput
+          value={sentence}
+          onChangeText={(e) => setSentence(e)}
+          className="rounded-md px-4 py-2 bg-gray-100 my-2"
+          placeholder="Sentence"
+        ></TextInput>
+        <Pressable
+          onPress={addField}
+          className="rounded-md bg-green-500 border-none flex justify-center items-center p-3"
+        >
+          <Text className="text-white font-semibold uppercase">ADD</Text>
+        </Pressable>
+        {/* <View className="absolute inset-0 bg-black opacity-50 w-[105%] h-[110%] rounded"></View> */}
+      </View>
 
       <Pressable
         onPress={handleClick}

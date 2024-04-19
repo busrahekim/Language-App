@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import React, { useState } from "react";
+import { View, TouchableOpacity, Image } from "react-native";
+import React from "react";
 
 interface IProps {
   onSelectTemplate: ({ template }: any) => void;
