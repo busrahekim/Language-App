@@ -78,7 +78,7 @@ const CategoryPage = () => {
           {items.map((item) => (
             <View
               key={item.id}
-              className="bg-white flex flex-row rounded mb-2 shadow-md shadow-black h-fit"
+              className="bg-white flex flex-row rounded mb-2 shadow-sm shadow-black h-fit"
             >
               <View className="justify-center items-center flex flex-row">
                 <Text
@@ -109,7 +109,7 @@ const CategoryPage = () => {
           {items.map((item) => (
             // <Text>{item.eng}</Text>
             <>
-              <ChatBubble item={item} />
+              <ChatBubble item={item} key={item} />
               {item.sentence && (
                 <Text
                   className="font-semibold text-sm my-2"

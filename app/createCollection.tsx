@@ -1,6 +1,6 @@
 import TemplateComponent from "@/components/TemplateComponent";
 import useItemReducer from "@/hooks/useItemReducer";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, FontAwesome6 } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useReducer, useState } from "react";
 import {
@@ -20,7 +20,7 @@ const CreatePageScreen = () => {
   const [sentence, setSentence] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
-  const [addButtonClicked, setAddButtonClicked] = useState(false);
+  const [addFieldOn, setAddFieldOn] = useState(false);
 
   const { state, addItem } = useItemReducer();
 
@@ -40,14 +40,19 @@ const CreatePageScreen = () => {
   };
 
   const handleAddCategory = () => {
-    setAddButtonClicked(true);
+    setAddFieldOn(true);
   };
   const addField = () => {
     addItem({ eng: eng, tr: tr });
-    setEng("")
-    setTr("")
-    setSentence("")
+    // setEng("");
+    // setTr("");
+    // setSentence("");
+    setAddFieldOn(false);
   };
+
+  function updateItem(): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <SafeAreaView className="flex-1 mx-5 space-y-2 justify-center">
@@ -62,7 +67,11 @@ const CreatePageScreen = () => {
         onSelectTemplate={handleTemplateSelection}
         selectedTemplate={selectedTemplate}
       />
-      <TouchableOpacity onPress={handleAddCategory}>
+      <TouchableOpacity
+        onPress={handleAddCategory}
+        disabled={addFieldOn}
+        className={`${addFieldOn ? `opacity-60` : `opacity-100`} `}
+      >
         <View className="flex flex-row items-center rounded-md bg-blue-400 h-10 w-[95%] px-2 my-2 mx-2">
           <View className="mt-1 mx-1">
             <AntDesign name="plus" size={20} color="rgb(255,255,255)" />
@@ -70,35 +79,44 @@ const CreatePageScreen = () => {
           <Text className="mt-1 text-lg text-white">Add Field</Text>
         </View>
       </TouchableOpacity>
-      <View className="flex p-2 bg-white rounded-md">
-        <View className="flex flex-row justify-between gap-1">
+      {addFieldOn === true ? (
+        <View className="flex p-2 bg-white rounded-md">
+          <View className="flex flex-row justify-between gap-1">
+            <TextInput
+              value={eng}
+              onChangeText={(e) => setEng(e)}
+              className="rounded-md px-4 py-2 bg-gray-100 my-2 flex-1"
+              placeholder="ENG"
+            ></TextInput>
+            <TextInput
+              value={tr}
+              onChangeText={(e) => setTr(e)}
+              className="rounded-md px-4 py-2 bg-gray-100 my-2 flex-1"
+              placeholder="TR"
+            ></TextInput>
+          </View>
           <TextInput
-            value={eng}
-            onChangeText={(e) => setEng(e)}
-            className="rounded-md px-4 py-2 bg-gray-100 my-2 flex-1"
-            placeholder="ENG"
+            value={sentence}
+            onChangeText={(e) => setSentence(e)}
+            className="rounded-md px-4 py-2 bg-gray-100 my-2"
+            placeholder="Sentence"
           ></TextInput>
-          <TextInput
-            value={tr}
-            onChangeText={(e) => setTr(e)}
-            className="rounded-md px-4 py-2 bg-gray-100 my-2 flex-1"
-            placeholder="TR"
-          ></TextInput>
+          <Pressable
+            onPress={addField}
+            className="rounded-md bg-green-500 border-none flex justify-center items-center p-3"
+          >
+            <Text className="text-white font-semibold uppercase">ADD</Text>
+          </Pressable>
+          {/* <View className="absolute inset-0 bg-black opacity-50 w-[105%] h-[110%] rounded"></View> */}
         </View>
-        <TextInput
-          value={sentence}
-          onChangeText={(e) => setSentence(e)}
-          className="rounded-md px-4 py-2 bg-gray-100 my-2"
-          placeholder="Sentence"
-        ></TextInput>
-        <Pressable
-          onPress={addField}
-          className="rounded-md bg-green-500 border-none flex justify-center items-center p-3"
-        >
-          <Text className="text-white font-semibold uppercase">ADD</Text>
-        </Pressable>
-        {/* <View className="absolute inset-0 bg-black opacity-50 w-[105%] h-[110%] rounded"></View> */}
-      </View>
+      ) : (
+        <View className="rounded-md bg-white border-gray-300 border flex flex-row justify-between p-3">
+          <Text className="text-black font-semibold uppercase">{eng}</Text>
+          <Pressable onPress={updateItem}>
+            <FontAwesome6 name="pencil" size={20} color="black" />
+          </Pressable>
+        </View>
+      )}
 
       <Pressable
         onPress={handleClick}

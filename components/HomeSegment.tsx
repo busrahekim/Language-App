@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  Pressable,
-  Image,
-  ProgressBarAndroid,
-} from "react-native";
+import { View, Text, Pressable, Image, Animated } from "react-native";
 import React from "react";
 import StudyCategory from "./StudyCategory";
 import { Feather } from "@expo/vector-icons";
@@ -38,14 +32,11 @@ const HomeSegment = () => {
                 <Text className="text-lg font-semibold text-gray-700 mb-[-10px]">
                   Earn 10 XP
                 </Text>
-                <View className="flex flex-row">
-                  <ProgressBarAndroid
-                    styleAttr="Horizontal"
-                    indeterminate={false}
-                    progress={0.5}
-                    color={"orange"}
-                    className="w-full"
-                  />
+                <View className="flex flex-row items-center">
+                  <View className="h-2 rounded-md w-full mt-2 bg-[#ccc]">
+                    <Animated.View className="h-2 bg-[#e9c46a] rounded-md w-52" />
+                  </View>
+
                   <Image
                     source={require("@/assets/images/chest.png")}
                     className="w-12 h-12 ml-[-10px]"
@@ -64,14 +55,10 @@ const HomeSegment = () => {
                 <Text className="text-lg font-semibold text-gray-700 mb-[-10px]">
                   Complete 3 lessons
                 </Text>
-                <View className="flex flex-row">
-                  <ProgressBarAndroid
-                    styleAttr="Horizontal"
-                    indeterminate={false}
-                    progress={0.9}
-                    color={"orange"}
-                    className="w-full"
-                  />
+                <View className="flex flex-row items-center">
+                  <View className="h-2 rounded-md w-full mt-2 bg-[#ccc]">
+                    <Animated.View className="h-2 bg-[#e9c46a] rounded-md w-24" />
+                  </View>
                   <Image
                     source={require("@/assets/images/chest.png")}
                     className="w-12 h-12 ml-[-10px]"
@@ -88,16 +75,12 @@ const HomeSegment = () => {
               />
               <View className="w-[65%]">
                 <Text className="text-lg font-semibold text-gray-700 mb-[-10px]">
-                 Find Vikram in lessons!
+                  Find Vikram in lessons!
                 </Text>
-                <View className="flex flex-row">
-                  <ProgressBarAndroid
-                    styleAttr="Horizontal"
-                    indeterminate={false}
-                    progress={0.1}
-                    color={"orange"}
-                    className="w-full"
-                  />
+                <View className="flex flex-row items-center">
+                  <View className="h-2 rounded-md w-full mt-2 bg-[#ccc]">
+                    <Animated.View className="h-2 bg-[#e9c46a] rounded-md w-44" />
+                  </View>
                   <Image
                     source={require("@/assets/images/chest.png")}
                     className="w-12 h-12 ml-[-10px]"
